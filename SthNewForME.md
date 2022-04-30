@@ -1,0 +1,30 @@
+- in index.html: "< script **data-href**="https://github.com/ekzhang/graphics-workshop" **data-target**="_blank"
+    src="https://unpkg.com/github-corners/dist/embed.min.js" ></ script >"
+    - [data-href](https://github.com/nathanford/data-href): main descriptin is in [Using data-href](https://github.com/nathanford/data-href#using-data-href) 
+    - data-target:  
+- in camera.js: 关于 update 函数内部的数学计算！！ 要做什么？为什么可以做什么写？涉及到了那些数学知识？？（不过目前主要是写 shder --2022.04.30）
+- in src/index.js: 
+  - import gengarUrl from "../models/gengar.obj.json **?url**";
+    - ?url :vite 的私有扩展, 表明Special queries can modify how assets are loaded:，相关 [vite文档](https://vitejs.dev/guide/features.html#static-assets)
+  - const regl = Regl({ extensions: ["OES_standard_derivatives"] }); #13
+    - [regl](https://github.com/regl-project/regl): 精简版webGL，利于本地开发和测试。 注意 regl 使用的几个基本步骤：链接内部有demo
+      - const regl = require('regl')()
+      - const drawTriangle = regl({frag:`` , vert: ``, attributes:{},uniforms:{},count: 3})
+      - regl.frame(({time}) => {})
+    - [extensions](https://github.com/regl-project/regl/blob/gh-pages/API.md#all-initialization-options) : one of initialization options of regl
+    - OES_standard_derivatives：one of WebGL Extension Registry.(WebGL OES_standard_derivatives Khronos Ratified Extension Specification)【暂时看不懂哇。。。 2022.04.30】
+      - When this extension is enabled:
+        - The hint entry point accepts FRAGMENT_SHADER_DERIVATIVE_HINT_OES as a target and the getParameter entry point accepts it as a pname.
+        - When a fragment shader enables, requires, or warns GL_OES_standard_derivatives with an #extension directive:
+            - genType dFdx(genType) is a built-in function.
+            - genType dFdy(genType) is a built-in function.
+            - genType fwidth(genType) is a built-in function.
+        - The GLSL macro GL_OES_standard_derivatives is defined as 1.
+  - const pane = new **Pane**({ title: "Controls" }); #24
+    - Pane： import { Pane } from "**tweakpane**";
+      - [tweakpane](https://github.com/cocopon/tweakpane):  Tweakpane is a compact pane library for fine-tuning parameters and monitoring value changes, inspired by [dat.GUI](https://github.com/dataarts/dat.gui). 即在页面添加参数操作的UI相关内容的
+  - [performance.now()](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance/now): 返回一个精确到毫秒的  DOMHighResTimeStamp 。
+    - [DOMHighResTimeStamp](https://developer.mozilla.org/zh-CN/docs/Web/API/DOMHighResTimeStamp): 是一个double类型，用于存储毫秒级的时间值。这种类型可以用来描述离散的时间点或者一段时间（两个离散时间点之间的时间差）。
+  - import.meta.hot:
+    - Vite 通过特殊的 import.meta.hot 对象暴露手动 HMR API。
+      - HMR:Hot Module Replacement (HMR)

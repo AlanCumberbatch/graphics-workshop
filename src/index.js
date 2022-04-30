@@ -20,6 +20,7 @@ const camera = createCamera(document.getElementsByTagName("canvas")[0], {
 const params = initPane();
 let mesh = null;
 
+// 初始化 一个操作参数的操作板 --- 里面的参数稍微看一些也是可以理解的，可以这个实时更新很方便啊，api也比较单一，熟悉之后应该是好用的。 为什么前端框架里没用呢？？ 还是说是我没用到，哈哈哈
 function initPane() {
   const pane = new Pane({ title: "Controls" });
   const params = {
@@ -28,8 +29,8 @@ function initPane() {
     scale: 20,
     mesh: teapotUrl,
     fps: 0,
-    kd: { r: 95, g: 230, b: 213 },
-    ks: { r: 240, g: 240, b: 240 },
+    kd: { r: 95, g: 230, b: 213 },//! TODO
+    ks: { r: 240, g: 240, b: 240 },//! TODO
     shininess: 5.0,
     background: { r: 120, g: 178, b: 255 },
     antialias: true,
@@ -48,25 +49,22 @@ function initPane() {
   const inputs = [
     [pane.addInput(params, "seed", { min: 0, max: 1 }), ["quilt", "landscape"]],
     [pane.addInput(params, "scale", { min: 10, max: 30 }), ["landscape"]],
-    [
-      pane
-        .addInput(params, "mesh", {
-          options: {
-            Gengar: gengarUrl,
-            Knot: knotUrl,
-            Sphere: sphereUrl,
-            Suzanne: suzanneUrl,
-            Teapot: teapotUrl,
-          },
-        })
-        .on("change", (event) => updateMesh(event.value)),
-      ["shading", "contours"],
+    [pane.addInput(params, "mesh", {
+      options: {
+        Gengar: gengarUrl,
+        Knot: knotUrl,
+        Sphere: sphereUrl,
+        Suzanne: suzanneUrl,
+        Teapot: teapotUrl,
+      },
+    })
+      .on("change", (event) => updateMesh(event.value)),
+    ["shading", "contours"],
     ],
     [pane.addInput(params, "kd"), ["shading", "contours"]],
     [pane.addInput(params, "ks"), ["shading", "contours"]],
-    [
-      pane.addInput(params, "shininess", { min: 1, max: 9 }),
-      ["shading", "contours"],
+    [pane.addInput(params, "shininess", { min: 1, max: 9 }),
+    ["shading", "contours"],
     ],
     [pane.addInput(params, "background"), ["raytracing"]],
     [pane.addInput(params, "antialias"), ["raytracing"]],
@@ -237,7 +235,7 @@ updateMesh(params.mesh).then(() => {
 });
 
 // Hot module reloading for shader code
-if (import.meta.hot) {
+if (import.meta.hot) {//! TODO  这里还是没怎么看懂。。。。。
   import.meta.hot.accept("./shaders.js", (module) => {
     Object.assign(shaders, module.default);
     draw = compileShaders();
